@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class UsuarioService {
@@ -24,5 +26,17 @@ public class UsuarioService {
     public Usuario buscarPorId(Long id) {
         return usuarioRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("Usuário não encontradp"));
+    }
+
+    @Transactional()
+    public Usuario editarSenha(Long id , String password) {
+        Usuario usuario = buscarPorId(id);
+        usuario.setPassword(password);
+        return usuario;
+    }
+
+    @Transactional(readOnly = true)
+    public List<Usuario> buscarTodos() {
+       return usuarioRepository.findAll();
     }
 }
