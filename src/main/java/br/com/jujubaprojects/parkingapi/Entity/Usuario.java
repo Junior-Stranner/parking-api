@@ -30,26 +30,29 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false , length = 100, unique = true)
+    @Column(name= "username",nullable = false , length = 100, unique = true)
     private String username;
 
-    @Column(nullable = false ,length = 200 , unique = true)
+    @Column(name= "password",nullable = false ,length = 200 , unique = true)
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false , length = 20)
+    @Column(name= "role",nullable = false , length = 20)
     private Role role;
 
     @CreatedDate
+    @Column(name= "data_Criacao")
     @DateTimeFormat(pattern = "dd/MM/yyyy - HH:mm")
     private LocalDateTime dataCriacao;
 
     @LastModifiedDate
+    @Column(name= "data_Modificacao")
     @DateTimeFormat(pattern = "dd/MM/yyyy - HH:mm")
     private LocalDateTime dataModificacao;
 
+    @Column(name= "criado_Por")
     private String criadoPor;
-
+    @Column(name= "modificado_Por")
     private String modificadoPor;
 
     @Override
