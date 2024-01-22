@@ -38,7 +38,7 @@ public class Usuario {
 
     @Enumerated(EnumType.STRING)
     @Column(name= "role",nullable = false , length = 20)
-    private Role role;
+    private Role role = Role.ROLE_CLIENTE;
 
     @CreatedDate
     @Column(name= "data_Criacao")

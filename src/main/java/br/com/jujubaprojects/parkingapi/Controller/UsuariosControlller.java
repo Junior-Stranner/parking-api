@@ -4,6 +4,7 @@ import br.com.jujubaprojects.parkingapi.Entity.Usuario;
 import br.com.jujubaprojects.parkingapi.Service.UsuarioService;
 import br.com.jujubaprojects.parkingapi.dto.UsuarioCreateDto;
 import br.com.jujubaprojects.parkingapi.dto.UsuarioResponseDto;
+import br.com.jujubaprojects.parkingapi.dto.UsuarioSenhaDto;
 import br.com.jujubaprojects.parkingapi.dto.mapper.UsuarioMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +27,15 @@ public class UsuariosControlller {
         return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioMapper.toDto(usuario));
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<UsuarioResponseDto> getById(@PathVariable("id") Long id) {
         Usuario usuario = this.usuarioService.buscarPorId(id);
-        return ResponseEntity.ok(usuario);
+        return ResponseEntity.ok(UsuarioMapper.toDto(usuario));
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Usuario> UpdatePassword(@PathVariable("id") long id,  @RequestBody Usuario usuario){
-        this.usuarioService.editarSenha(id , usuario.getPassword());
-        return ResponseEntity.ok().build();
+    public ResponseEntity<UsuarioResponseDto> UpdatePassword(@PathVariable("id") long id,  @RequestBody UsuarioSenhaDto usuarioSenhaDto){
+      Usuario usuario =  this.usuarioService.editarSenha(id , usuarioSenhaDto.getSenhaAtual(), usuarioSenhaDto.getNovaSenha(), usuarioSenhaDto.getConfirmaSenha());
+        return ResponseEntity.ok(UsuarioMapper.toDto(usuario));
     }
     @GetMapping
     public ResponseEntity<List<Usuario>> getAll() {

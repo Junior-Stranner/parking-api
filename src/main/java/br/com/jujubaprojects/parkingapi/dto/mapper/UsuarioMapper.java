@@ -1,7 +1,5 @@
 package br.com.jujubaprojects.parkingapi.dto.mapper;
 
-import java.util.Properties;
-
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 
