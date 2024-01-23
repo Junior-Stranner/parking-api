@@ -6,6 +6,7 @@ import br.com.jujubaprojects.parkingapi.dto.UsuarioCreateDto;
 import br.com.jujubaprojects.parkingapi.dto.UsuarioResponseDto;
 import br.com.jujubaprojects.parkingapi.dto.UsuarioSenhaDto;
 import br.com.jujubaprojects.parkingapi.dto.mapper.UsuarioMapper;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,7 @@ public class UsuariosControlller {
     private  UsuarioService usuarioService;
 
     @PostMapping
-    public ResponseEntity<UsuarioResponseDto> create(@RequestBody UsuarioCreateDto usuarioCreateDto){
+    public ResponseEntity<UsuarioResponseDto> create( @Valid @RequestBody UsuarioCreateDto usuarioCreateDto){
       Usuario usuario = this.usuarioService.salvar(UsuarioMapper.toUsuario(usuarioCreateDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioMapper.toDto(usuario));
     }
@@ -33,7 +34,7 @@ public class UsuariosControlller {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<UsuarioResponseDto> UpdatePassword(@PathVariable("id") long id,  @RequestBody UsuarioSenhaDto usuarioSenhaDto){
+    public ResponseEntity<UsuarioResponseDto> UpdatePassword(@PathVariable("id") long id, @Valid  @RequestBody UsuarioSenhaDto usuarioSenhaDto){
       Usuario usuario =  this.usuarioService.editarSenha(id , usuarioSenhaDto.getSenhaAtual(), usuarioSenhaDto.getNovaSenha(), usuarioSenhaDto.getConfirmaSenha());
         return ResponseEntity.ok(UsuarioMapper.toDto(usuario));
     }

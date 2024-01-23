@@ -1,5 +1,6 @@
 package br.com.jujubaprojects.parkingapi.dto.mapper;
 
+
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 
@@ -28,4 +29,13 @@ public class UsuarioMapper {
             return mapper.map(usuario, UsuarioResponseDto.class);
         
     }
+
+  /*   public class PessoaMapper {
+        private static final ModelMapper modelMapper = new ModelMapper();
+    
+        public static PessoaDto toDto(Pessoa pessoa) {
+            // Insira a lógica para conversão do objeto Pessoa em um objeto PessoaDto
+            return new ModelMapper().map(pessoa, PessoaDto);
+        }
+    }*/
 }
