@@ -1,4 +1,4 @@
-package br.com.jujubaprojects.parkingapi.exception;
+package br.com.jujubaprojects.parkingapi.Web.exception;
 
 import java.util.HashMap;
 import java.util.Map;

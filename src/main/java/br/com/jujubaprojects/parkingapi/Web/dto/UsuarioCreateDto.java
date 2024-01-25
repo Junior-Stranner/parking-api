@@ -1,4 +1,4 @@
-package br.com.jujubaprojects.parkingapi.dto;
+package br.com.jujubaprojects.parkingapi.Web.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

@@ -1,12 +1,12 @@
-package br.com.jujubaprojects.parkingapi.dto.mapper;
+package br.com.jujubaprojects.parkingapi.Web.dto.mapper;
 
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 
 import br.com.jujubaprojects.parkingapi.Entity.Usuario;
-import br.com.jujubaprojects.parkingapi.dto.UsuarioCreateDto;
-import br.com.jujubaprojects.parkingapi.dto.UsuarioResponseDto;
+import br.com.jujubaprojects.parkingapi.Web.dto.UsuarioResponseDto;
+import br.com.jujubaprojects.parkingapi.Web.dto.UsuarioCreateDto;
 
 public class UsuarioMapper {
 

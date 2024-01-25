@@ -1,11 +1,11 @@
-package br.com.jujubaprojects.parkingapi.Controller;
+package br.com.jujubaprojects.parkingapi.Web.Controller;
 
 import br.com.jujubaprojects.parkingapi.Entity.Usuario;
 import br.com.jujubaprojects.parkingapi.Service.UsuarioService;
-import br.com.jujubaprojects.parkingapi.dto.UsuarioCreateDto;
-import br.com.jujubaprojects.parkingapi.dto.UsuarioResponseDto;
-import br.com.jujubaprojects.parkingapi.dto.UsuarioSenhaDto;
-import br.com.jujubaprojects.parkingapi.dto.mapper.UsuarioMapper;
+import br.com.jujubaprojects.parkingapi.Web.dto.UsuarioCreateDto;
+import br.com.jujubaprojects.parkingapi.Web.dto.UsuarioResponseDto;
+import br.com.jujubaprojects.parkingapi.Web.dto.UsuarioSenhaDto;
+import br.com.jujubaprojects.parkingapi.Web.dto.mapper.UsuarioMapper;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
