@@ -1,23 +1,25 @@
 package br.com.jujubaprojects.parkingapi.Service;
 
-import br.com.jujubaprojects.parkingapi.Entity.Usuario;
-import br.com.jujubaprojects.parkingapi.Repository.UsuarioRepository;
-import br.com.jujubaprojects.parkingapi.exception.UsernameUniqueViolationException;
-import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.jujubaprojects.parkingapi.Entity.Usuario;
+import br.com.jujubaprojects.parkingapi.Repository.UsuarioRepository;
+import br.com.jujubaprojects.parkingapi.exception.EntityNotFoundException;
+import br.com.jujubaprojects.parkingapi.exception.PasswordInvalidException;
+import br.com.jujubaprojects.parkingapi.exception.UsernameUniqueViolationException;
+
 import java.util.List;
 
-@RequiredArgsConstructor
 @Service
 public class UsuarioService {
 
-    @Autowired
-
     private final UsuarioRepository usuarioRepository;
+
+    UsuarioService(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+    }
 
     @Transactional
     public Usuario salvar(Usuario usuario) {
@@ -38,12 +40,12 @@ public class UsuarioService {
     @Transactional
     public Usuario editarSenha(Long id, String senhaAtual, String novaSenha, String confirmaSenha) {
         if (!novaSenha.equals(confirmaSenha)) {
-            throw new RuntimeException("Nova senha não confere com confirmação de senha.");
+            throw new PasswordInvalidException("Nova senha não confere com confirmação de senha.");
         }
 
         Usuario user = buscarPorId(id);
         if (!user.getPassword().equals(senhaAtual)) {
-            throw new RuntimeException("Sua senha não confere.");
+            throw new PasswordInvalidException("Sua senha não confere.");
         }
 
         user.setPassword(novaSenha);
