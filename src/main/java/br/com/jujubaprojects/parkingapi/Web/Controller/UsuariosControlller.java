@@ -32,7 +32,7 @@ public class UsuariosControlller {
     @Autowired
     private  UsuarioService usuarioService;
 
-    @Operation(summary = "Criar um novo usuuário", description = "Recurso para criar um novo usuário",
+    @Operation(summary = "Criar um novo usuário", description = "Recurso para criar um novo usuário",
             responses = {
                 @ApiResponse(responseCode = "201", description = "Recurso criado com sucesso",
                         content = @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioResponseDto.class))),
