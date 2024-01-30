@@ -1,0 +1,1 @@
+insert into usuarios(id,username,password,role) value (3,"bubuzinha@213","bubuzinha20001","ROLE_CLIENTE")
