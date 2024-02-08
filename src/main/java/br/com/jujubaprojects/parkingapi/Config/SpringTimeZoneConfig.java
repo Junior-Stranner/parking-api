@@ -1,16 +1,15 @@
 package br.com.jujubaprojects.parkingapi.Config;
 
-import java.util.TimeZone;
-
+import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Configuration;
 
-import jakarta.annotation.PostConstruct;
+import java.util.TimeZone;
 
 @Configuration
-public class SpringTimeZoneConfig {
-    
+public class SpringTimezoneConfig {
+
     @PostConstruct
-    public void timezoneConfig(){
-        TimeZone.setDefault(TimeZone.getTimeZone("America/São Paulo"));
+    public void timezoneConfig() {
+        TimeZone.setDefault(TimeZone.getTimeZone("America/Sao_Paulo"));
     }
 }
