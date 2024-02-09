@@ -1,5 +1,6 @@
 package br.com.jujubaprojects.parkingapi.Entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -48,7 +49,7 @@ public class Usuario {
     @LastModifiedDate
     @Column(name= "data_Modificacao")
     @DateTimeFormat(pattern = "dd/MM/yyyy - HH:mm")
-    private LocalDateTime dataModificacao;
+    private LocalDateTime dataModificacao = LocalDateTime.now();
 
     @Column(name= "criado_Por")
     private String criadoPor;
