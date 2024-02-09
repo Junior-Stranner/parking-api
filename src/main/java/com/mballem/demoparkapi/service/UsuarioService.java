@@ -1,16 +1,14 @@
-package br.com.jujubaprojects.parkingapi.Service;
+package com.mballem.demoparkapi.service;
 
-
+import com.mballem.demoparkapi.entity.Usuario;
+import com.mballem.demoparkapi.exception.EntityNotFoundException;
+import com.mballem.demoparkapi.exception.PasswordInvalidException;
+import com.mballem.demoparkapi.exception.UsernameUniqueViolationException;
+import com.mballem.demoparkapi.repository.UsuarioRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import br.com.jujubaprojects.parkingapi.Entity.Usuario;
-import br.com.jujubaprojects.parkingapi.Repository.UsuarioRepository;
-import br.com.jujubaprojects.parkingapi.exception.EntityNotFoundException;
-import br.com.jujubaprojects.parkingapi.exception.PasswordInvalidException;
-import br.com.jujubaprojects.parkingapi.exception.UsernameUniqueViolationException;
-import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
@@ -70,4 +68,3 @@ public class UsuarioService {
         return usuarioRepository.findRoleByUsername(username);
     }
 }
-

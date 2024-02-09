@@ -1,4 +1,4 @@
-package br.com.jujubaprojects.parkingapi.Entity;
+package com.mballem.demoparkapi.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
