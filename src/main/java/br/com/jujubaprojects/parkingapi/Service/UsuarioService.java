@@ -14,60 +14,60 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-@RequiredArgsConstructor
-@Service
+@RequiredArgsConstructor // Anotação do Lombok para gerar automaticamente um construtor com as dependências necessárias
+@Service // Indica que esta classe é um componente de serviço gerenciado pelo Spring
 public class UsuarioService {
 
-    private final UsuarioRepository usuarioRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final UsuarioRepository usuarioRepository; // Declaração do atributo usuarioRepository que é uma instância de UsuarioRepository
+    private final PasswordEncoder passwordEncoder; // Declaração do atributo passwordEncoder que é uma instância de PasswordEncoder
 
-    @Transactional
-    public Usuario salvar(Usuario usuario) {
+    @Transactional // Esta anotação indica que o método é transacional, ou seja, será executado em uma transação de banco de dados
+    public Usuario salvar(Usuario usuario) { // Método para salvar um usuário
         try {
-            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
-            return usuarioRepository.save(usuario);
-        } catch (org.springframework.dao.DataIntegrityViolationException ex) {
-            throw new UsernameUniqueViolationException(String.format("Username '%s' já cadastrado", usuario.getUsername()));
+            usuario.setPassword(passwordEncoder.encode(usuario.getPassword())); // Codifica a senha do usuário antes de salvar no banco de dados
+            return usuarioRepository.save(usuario); // Salva o usuário no banco de dados usando o repository
+        } catch (org.springframework.dao.DataIntegrityViolationException ex) { // Captura uma exceção de violação de integridade de dados
+            throw new UsernameUniqueViolationException(String.format("Username '%s' já cadastrado", usuario.getUsername())); // Lança uma exceção personalizada se o nome de usuário já estiver cadastrado
         }
     }
 
-    @Transactional(readOnly = true)
-    public Usuario buscarPorId(Long id) {
+    @Transactional(readOnly = true) // Esta anotação indica que o método é apenas de leitura no banco de dados
+    public Usuario buscarPorId(Long id) { // Método para buscar um usuário pelo ID
         return usuarioRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException(String.format("Usuário id=%s não encontrado", id))
+                () -> new EntityNotFoundException(String.format("Usuário id=%s não encontrado", id)) // Lança uma exceção se o usuário não for encontrado
         );
     }
 
-    @Transactional
-    public Usuario editarSenha(Long id, String senhaAtual, String novaSenha, String confirmaSenha) {
-        if (!novaSenha.equals(confirmaSenha)) {
+    @Transactional // Esta anotação indica que o método é transacional
+    public Usuario editarSenha(Long id, String senhaAtual, String novaSenha, String confirmaSenha) { // Método para editar a senha de um usuário
+        if (!novaSenha.equals(confirmaSenha)) { // Verifica se a nova senha coincide com a confirmação de senha
             throw new PasswordInvalidException("Nova senha não confere com confirmação de senha.");
         }
 
-        Usuario user = buscarPorId(id);
-        if (!passwordEncoder.matches(senhaAtual, user.getPassword())) {
+        Usuario user = buscarPorId(id); // Busca o usuário pelo ID
+        if (!passwordEncoder.matches(senhaAtual, user.getPassword())) { // Verifica se a senha atual fornecida coincide com a senha armazenada
             throw new PasswordInvalidException("Sua senha não confere.");
         }
 
-        user.setPassword(passwordEncoder.encode(novaSenha));
-        return user;
+        user.setPassword(passwordEncoder.encode(novaSenha)); // Atualiza a senha do usuário
+        return user; // Retorna o usuário atualizado
     }
 
-    @Transactional(readOnly = true)
-    public List<Usuario> buscarTodos() {
-        return usuarioRepository.findAll();
+    @Transactional(readOnly = true) // Esta anotação indica que o método é apenas de leitura no banco de dados
+    public List<Usuario> buscarTodos() { // Método para buscar todos os usuários
+        return usuarioRepository.findAll(); // Retorna uma lista de todos os usuários do banco de dados
     }
 
-    @Transactional(readOnly = true)
-    public Usuario buscarPorUsername(String username) {
+    @Transactional(readOnly = true) // Esta anotação indica que o método é apenas de leitura no banco de dados
+    public Usuario buscarPorUsername(String username) { // Método para buscar um usuário pelo nome de usuário
         return usuarioRepository.findByUsername(username).orElseThrow(
-                () -> new EntityNotFoundException(String.format("Usuario com '%s' não encontrado", username))
+                () -> new EntityNotFoundException(String.format("Usuario com '%s' não encontrado", username)) // Lança uma exceção se o usuário não for encontrado
         );
     }
 
-    @Transactional(readOnly = true)
-    public Usuario.Role buscarRolePorUsername(String username) {
-        return usuarioRepository.findRoleByUsername(username);
+    @Transactional(readOnly = true) // Esta anotação indica que o método é apenas de leitura no banco de dados
+    public Usuario.Role buscarRolePorUsername(String username) { // Método para buscar a role (papel) de um usuário pelo nome de usuário
+        return usuarioRepository.findRoleByUsername(username); // Retorna a role do usuário pelo nome de usuário
     }
 }
 

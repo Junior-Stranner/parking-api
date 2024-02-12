@@ -1,15 +1,16 @@
 package com.mballem.demoparkapi;
 
-import com.mballem.demoparkapi.web.dto.UsuarioCreateDto;
-import com.mballem.demoparkapi.web.dto.UsuarioResponseDto;
-import com.mballem.demoparkapi.web.dto.UsuarioSenhaDto;
-import com.mballem.demoparkapi.web.exception.ErrorMessage;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.reactive.server.WebTestClient;
+
+import br.com.jujubaprojects.parkingapi.Web.dto.UsuarioCreateDto;
+import br.com.jujubaprojects.parkingapi.Web.dto.UsuarioResponseDto;
+import br.com.jujubaprojects.parkingapi.Web.dto.UsuarioSenhaDto;
+import br.com.jujubaprojects.parkingapi.Web.exception.ErrorMessage;
 
 import java.util.List;
 

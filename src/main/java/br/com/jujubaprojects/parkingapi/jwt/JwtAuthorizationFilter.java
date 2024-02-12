@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired; // Importa a anot
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken; // Importa a classe UsernamePasswordAuthenticationToken para autenticação do usuário
 import org.springframework.security.core.context.SecurityContextHolder; // Importa a classe SecurityContextHolder para acessar o contexto de segurança
 import org.springframework.security.core.userdetails.UserDetails; // Importa a classe UserDetails para detalhes do usuário
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource; // Importa a classe WebAuthenticationDetailsSource para detalhes da autenticação da web
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter; // Importa a classe OncePerRequestFilter para criar um filtro executado uma vez por solicitação
 
 import java.io.IOException; // Importa a exceção IOException
