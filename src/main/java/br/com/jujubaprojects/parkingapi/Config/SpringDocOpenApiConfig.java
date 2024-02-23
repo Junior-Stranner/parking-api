@@ -23,8 +23,8 @@ public class SpringDocOpenApiConfig {
                          .name("Apache 2.0") // Define o nome da licença
                          .url("https://www.apache.org/licenses/LICENSE-2.0")) // Define a URL da licença
                      .contact(new Contact() // Define as informações de contato
-                        .name("Marcio Ballem") // Define o nome do contato
-                        .email("marcio@spring-park.com")) // Define o e-mail do contato
+                        .name("Junior Stranner") // Define o nome do contato
+                        .email("jujuba@spring-park.com")) // Define o e-mail do contato
                 );
     }
 }

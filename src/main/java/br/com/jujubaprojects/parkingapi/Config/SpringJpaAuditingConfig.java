@@ -1,4 +1,4 @@
-/*package br.com.jujubaprojects.parkingapi.Config;
+package br.com.jujubaprojects.parkingapi.Config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -20,4 +20,4 @@ public class SpringJpaAuditingConfig implements AuditorAware<String> {
         return null;
 
     }
-}*/
+}
