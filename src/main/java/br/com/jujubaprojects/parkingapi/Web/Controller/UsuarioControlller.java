@@ -19,6 +19,7 @@ import jakarta.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,29 +38,40 @@ public class UsuarioControlller {
         this.usuarioService = usuarioService;
 }
 
-@Operation(summary = "Criar um novo usuário", description = "Recurso para criar um novo usuário",
-            responses = {
-                @ApiResponse(responseCode = "201", description = "Recurso criado com sucesso",
-                        content = @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioResponseDto.class))),
-                @ApiResponse(responseCode = "409", description = "Usuário e-mail já cadastrado no sistema",
-                        content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
-                @ApiResponse(responseCode = "422", description = "Recurso não processado por dados de entrada invalidos",
-                        content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
-            })
-    @PostMapping(produces =  MediaType.APPLICATION_JSON_VALUE)
+@PostMapping(produces = { MediaType.APPLICATION_JSON_VALUE })//Swagger exige isso  "produces = MediaType.APPLICATION_JSON_VALUE"
+	@Operation(summary = "Adds a new Person",
+		description = "Adds a new Person by passing in a JSON, XML or YML representation of the person!",
+		tags = {"People"},
+		responses = {
+			@ApiResponse(description = "Success", responseCode = "200",
+				content = @Content(schema = @Schema(implementation = UsuarioResponseDto.class))),
+			@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+			@ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+			@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
+		}
+	)
     public ResponseEntity<UsuarioResponseDto> create(@Valid @RequestBody UsuarioCreateDto createDto) {
         Usuario user = usuarioService.salvar(UsuarioMapper.toUsuario(createDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioMapper.toDto(user));
     }
 
-    @Operation(summary = "Recuperar um usuário pelo id", description = "Recuperar um usuário pelo id",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Recurso recuperado com sucesso",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioResponseDto.class))),
-                    @ApiResponse(responseCode = "404", description = "Recurso não encontrado",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
-            })
-    @GetMapping(value ="/{id}" ,produces =  MediaType.APPLICATION_JSON_VALUE)
+
+    @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)//Swagger exige isso  "produces = MediaType.APPLICATION_JSON_VALUE"
+   
+    @Operation(summary = "Finds a Usuario", description = "Finds a Usuario",
+    tags = {"Usuario"},
+    responses = {
+            @ApiResponse(description = "Success", responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = UsuarioResponseDto.class))
+            ),
+            @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+            @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+            @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+            @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+            @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
+    }
+)
+@PreAuthorize("hasRole('ADMIN') OR hasRole('CLIENTE') AND ID == authentication.principal.id")
     public ResponseEntity<UsuarioResponseDto> getById(@PathVariable Long id) {
         Usuario user = usuarioService.buscarPorId(id);
         return ResponseEntity.ok(UsuarioMapper.toDto(user));
@@ -80,14 +92,22 @@ public class UsuarioControlller {
         return ResponseEntity.noContent().build();
     }
 
-
-    @Operation(summary = "Listar todos os usuários", description = "Listar todos os usuários cadastrados",
+    @GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE})//Swagger exige isso  "produces = MediaType.APPLICATION_JSON_VALUE"
+    @Operation(summary = "Finds all People", description = "Finds all People",
+            tags = {"People"},
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Lista com todos os usuários cadastrados",
-                            content = @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = UsuarioResponseDto.class))))
-            })
-    @GetMapping
+                    @ApiResponse(description = "Success", responseCode = "200",
+                            content = {
+                                    @Content(
+                                            mediaType = "application/json",
+                                            array = @ArraySchema(schema = @Schema(implementation = UsuarioResponseDto.class)))
+                            }),
+                            @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                            @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                            @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+                            @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
+      }
+    )
     public ResponseEntity<List<UsuarioResponseDto>> getAll() {
         List<Usuario> users = usuarioService.buscarTodos();
         return ResponseEntity.ok(UsuarioMapper.toListDto(users));

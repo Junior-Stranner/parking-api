@@ -21,6 +21,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter { // Classe que
     private JwtUserDetailsService detailsService; // Serviço para detalhes do usuário JWT
 
     // Método que realiza o filtro interno da requisição
+    @SuppressWarnings("null")
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         final String token = request.getHeader(JwtUtils.JWT_AUTHORIZATION); // Obtém o token JWT do cabeçalho da requisição
