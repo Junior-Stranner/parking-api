@@ -1,12 +1,15 @@
 package br.com.jujubaprojects.parkingapi.Service;
 
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.jujubaprojects.parkingapi.Entity.Usuario;
 import br.com.jujubaprojects.parkingapi.Repository.UsuarioRepository;
+import br.com.jujubaprojects.parkingapi.Web.exception.UnauthorizedAccessException;
 import br.com.jujubaprojects.parkingapi.exception.EntityNotFoundException;
 import br.com.jujubaprojects.parkingapi.exception.PasswordInvalidException;
 import br.com.jujubaprojects.parkingapi.exception.UsernameUniqueViolationException;
@@ -33,9 +36,16 @@ public class UsuarioService {
 
     @Transactional(readOnly = true) // Esta anotação indica que o método é apenas de leitura no banco de dados
     public Usuario buscarPorId(Long id) { // Método para buscar um usuário pelo ID
-        return usuarioRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException(String.format("Usuário id=%s não encontrado", id)) // Lança uma exceção se o usuário não for encontrado
-        );
+       Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // Obtém a autenticação atual
+        String username = authentication.getName(); // Obtém o nome de usuário autenticado
+        Usuario user = usuarioRepository.findById(id).orElse(null); // Busca o usuário pelo ID
+        
+        // Verifica se o usuário existe e se o ID do usuário autenticado corresponde ao ID do usuário solicitado
+        if (user != null && user.getUsername().equals(username)) {
+            return user;
+        } else {
+            throw new UnauthorizedAccessException("Acesso não autorizado"); // Lança uma exceção se o acesso não for autorizado
+        }
     }
 
     @Transactional // Esta anotação indica que o método é transacional

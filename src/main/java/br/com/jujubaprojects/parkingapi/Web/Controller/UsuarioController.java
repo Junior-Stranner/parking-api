@@ -21,6 +21,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -62,10 +63,16 @@ public class UsuarioController {
                     @ApiResponse(responseCode = "404", description = "Recurso não encontrado",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
             })
-    @PreAuthorize("hasRole('ADMIN')") //OR hasRole('CLIENTE') AND ID == authentication.principal.id
-    public ResponseEntity<UsuarioResponseDto> getById(@PathVariable Long id) {
-        Usuario user = usuarioService.buscarPorId(id);
-        return ResponseEntity.ok(UsuarioMapper.toDto(user));
+ public ResponseEntity<UsuarioResponseDto> getById(@PathVariable Long id, Authentication authentication) {
+                String username = authentication.getName(); // Obtém o nome de usuário autenticado
+                Usuario user = usuarioService.buscarPorId(id);
+                
+                // Verifica se o ID do usuário autenticado corresponde ao ID do usuário solicitado
+                if (user != null && user.getUsername().equals(username)) {
+                    return ResponseEntity.ok(UsuarioMapper.toDto(user));
+                } else {
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).build(); // Retorna status de proibido se não for o próprio usuário
+                }
     }
 
     @SuppressWarnings("unused")
