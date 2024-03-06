@@ -23,7 +23,11 @@ public class SpringSecurityConfig  {
         
         private static final String[] DOCUMENTATION_OPENAPI = {
                 "/docs/index.html",
+<<<<<<< HEAD
                 "/docs-park.html","/docs-park/**",
+=======
+                "/docs-park.html", "/docs-park/**",
+>>>>>>> c3ba523a3be86cd7dbb9fed9fcdc975a651c65bc
                 "/v3/api-docs/**",
                 "/swagger-ui-custom.html", "/swagger-ui.html", "/swagger-ui/**",
                 "/**.html", "/webjars/**", "/configuration/**", "/swagger-resources/**"
@@ -38,7 +42,10 @@ public class SpringSecurityConfig  {
                     .authorizeHttpRequests(auth -> auth
                             .requestMatchers(HttpMethod.POST, "api/v1/usuarios").permitAll()
                             .requestMatchers(HttpMethod.POST, "api/v1/auth").permitAll()
+<<<<<<< HEAD
                             .requestMatchers("/api/v1/usuarios/{id}").hasRole("ADMIN")
+=======
+>>>>>>> c3ba523a3be86cd7dbb9fed9fcdc975a651c65bc
                             .requestMatchers(DOCUMENTATION_OPENAPI).permitAll()
                             .anyRequest().authenticated()
                     ).sessionManagement(
@@ -49,7 +56,11 @@ public class SpringSecurityConfig  {
                             .authenticationEntryPoint(new JwtAuthenticationEntryPoint())
                     ).build();
         }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> c3ba523a3be86cd7dbb9fed9fcdc975a651c65bc
         @Bean
         public JwtAuthorizationFilter jwtAuthorizationFilter() {
             return new JwtAuthorizationFilter();
