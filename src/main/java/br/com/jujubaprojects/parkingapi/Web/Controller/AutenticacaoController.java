@@ -1,6 +1,12 @@
 package br.com.jujubaprojects.parkingapi.Web.Controller;
 
 // Importações relacionadas ao uso de servlets HTTP do pacote Jakarta EE
+import br.com.jujubaprojects.parkingapi.Web.dto.UsuarioResponseDto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 
 // Importação para validação de objetos com anotação @Valid do pacote Jakarta EE
@@ -33,11 +39,11 @@ import br.com.jujubaprojects.parkingapi.Web.exception.ErrorMessage;
 import br.com.jujubaprojects.parkingapi.jwt.JwtToken;
 import br.com.jujubaprojects.parkingapi.jwt.JwtUserDetailsService;
 
-
 @Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1")
+@Tag(name = "Authenticação", description = "Recurso para proceder com a authenticação na API")
 public class AutenticacaoController {
 
     // Injeção do serviço responsável pela autenticação JWT do usuário
@@ -46,7 +52,21 @@ public class AutenticacaoController {
     // Injeção do gerenciador de autenticação do Spring Security
     private final AuthenticationManager authenticationManager;
 
+    public AutenticacaoController(JwtUserDetailsService jwtUserDetailsService, AuthenticationManager authenticationManager) {
+        this.jwtUserDetailsService = jwtUserDetailsService;
+        this.authenticationManager = authenticationManager;
+    }
+
     // Endpoint para autenticar o usuário
+    @Operation(summary = "Authenticar na API", description = "Recurso para authenticar na AOI",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Authenticação realizada com sucesso e retorno de um bearer Token",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioResponseDto.class))),
+                    @ApiResponse(responseCode = "400", description = "Credenciais inválidas",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
+                    @ApiResponse(responseCode = "422", description = "campos inválidos",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+            })
     @PostMapping("/auth")
     public ResponseEntity<?> autenticar(@RequestBody @Valid UsuarioLoginDto dto, HttpServletRequest request) {
         // Registro de informações sobre o processo de autenticação

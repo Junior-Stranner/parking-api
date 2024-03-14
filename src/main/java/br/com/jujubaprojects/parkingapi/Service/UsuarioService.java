@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.jujubaprojects.parkingapi.Entity.Usuario;
 import br.com.jujubaprojects.parkingapi.Repository.UsuarioRepository;
-import br.com.jujubaprojects.parkingapi.Web.exception.UnauthorizedAccessException;
+import br.com.jujubaprojects.parkingapi.exception.UnauthorizedAccessException;
 import br.com.jujubaprojects.parkingapi.exception.EntityNotFoundException;
 import br.com.jujubaprojects.parkingapi.exception.PasswordInvalidException;
 import br.com.jujubaprojects.parkingapi.exception.UsernameUniqueViolationException;
@@ -23,6 +23,11 @@ public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository; // Declaração do atributo usuarioRepository que é uma instância de UsuarioRepository
     private final PasswordEncoder passwordEncoder; // Declaração do atributo passwordEncoder que é uma instância de PasswordEncoder
+
+    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+        this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Transactional // Esta anotação indica que o método é transacional, ou seja, será executado em uma transação de banco de dados
     public Usuario salvar(Usuario usuario) { // Método para salvar um usuário

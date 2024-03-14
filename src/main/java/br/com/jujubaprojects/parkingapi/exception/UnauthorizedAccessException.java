@@ -1,4 +1,4 @@
-package br.com.jujubaprojects.parkingapi.Web.exception;
+package br.com.jujubaprojects.parkingapi.exception;
 
 public class UnauthorizedAccessException extends RuntimeException {
 

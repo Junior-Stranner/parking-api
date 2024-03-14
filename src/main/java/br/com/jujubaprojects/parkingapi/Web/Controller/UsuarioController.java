@@ -40,7 +40,7 @@ public class UsuarioController {
     @PostMapping(produces = { MediaType.APPLICATION_JSON_VALUE })//Swagger exige isso  "produces = MediaType.APPLICATION_JSON_VALUE"
     @Operation(summary = "Criar um novo usuário", description = "Recurso para criar um novo usuário",
             responses = {
-                    @ApiResponse(responseCode = "201", description = "Recurso criado com sucesso",
+                    @ApiResponse(responseCode = "200", description = "Recurso criado com sucesso",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioResponseDto.class))),
                     @ApiResponse(responseCode = "409", description = "Usuário e-mail já cadastrado no sistema",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
@@ -63,7 +63,8 @@ public class UsuarioController {
                     @ApiResponse(responseCode = "404", description = "Recurso não encontrado",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
             })
- public ResponseEntity<UsuarioResponseDto> getById(@PathVariable Long id, Authentication authentication) {
+  //  @PreAuthorize("hasAnyRole('ADMIN', CLIENTE) AND (#id == authentication.principal.id)")
+    public ResponseEntity<UsuarioResponseDto> getById(@PathVariable Long id, Authentication authentication) {
                 String username = authentication.getName(); // Obtém o nome de usuário autenticado
                 Usuario user = usuarioService.buscarPorId(id);
                 
@@ -91,6 +92,7 @@ public class UsuarioController {
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
             })
     @PatchMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+ //   @PreAuthorize("hasAnyRole('ADMIN', CLIENTE) AND (#id == authentication.principal.id)")
     public ResponseEntity<Void> updatePassword(@PathVariable Long id, @Valid @RequestBody UsuarioSenhaDto dto) {
         Usuario user = usuarioService.editarSenha(id, dto.getSenhaAtual(), dto.getNovaSenha(), dto.getConfirmaSenha());
         return ResponseEntity.noContent().build();
@@ -106,7 +108,7 @@ public class UsuarioController {
                     @ApiResponse(responseCode = "403", description = "Usuário sem permissão para acessar este recurso",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
             })
-    @PreAuthorize("hasRole('ADMIN')")
+  //  @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UsuarioResponseDto>> getAll() {
         List<Usuario> users = usuarioService.buscarTodos();
         return ResponseEntity.ok(UsuarioMapper.toListDto(users));

@@ -1,5 +1,6 @@
 package br.com.jujubaprojects.parkingapi.Web.exception;
 
+import br.com.jujubaprojects.parkingapi.exception.CpfUniqueViolationException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,7 @@ import br.com.jujubaprojects.parkingapi.exception.UsernameUniqueViolationExcepti
 @Slf4j
 @RestControllerAdvice
 public class ApiExceptionHandler {
-    
+
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ErrorMessage> accessDeniedException(AccessDeniedException ex, HttpServletRequest request) {
         log.error("Api Error - ", ex);
@@ -46,7 +47,7 @@ public class ApiExceptionHandler {
                 .body(new ErrorMessage(request, HttpStatus.NOT_FOUND, ex.getMessage()));
     }
 
-    @ExceptionHandler(UsernameUniqueViolationException.class)
+    @ExceptionHandler({UsernameUniqueViolationException.class, CpfUniqueViolationException.class})
     public ResponseEntity<ErrorMessage> uniqueViolationException(RuntimeException ex, HttpServletRequest request) {
         log.error("Api Error - ", ex);
         return ResponseEntity
