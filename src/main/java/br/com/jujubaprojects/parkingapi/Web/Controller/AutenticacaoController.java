@@ -52,10 +52,7 @@ public class AutenticacaoController {
     // Injeção do gerenciador de autenticação do Spring Security
     private final AuthenticationManager authenticationManager;
 
-    public AutenticacaoController(JwtUserDetailsService jwtUserDetailsService, AuthenticationManager authenticationManager) {
-        this.jwtUserDetailsService = jwtUserDetailsService;
-        this.authenticationManager = authenticationManager;
-    }
+   
 
     // Endpoint para autenticar o usuário
     @Operation(summary = "Authenticar na API", description = "Recurso para authenticar na AOI",

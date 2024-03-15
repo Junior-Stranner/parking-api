@@ -1,6 +1,7 @@
 package br.com.jujubaprojects.parkingapi;
 
 import br.com.jujubaprojects.parkingapi.Web.dto.UsuarioLoginDto;
+import br.com.jujubaprojects.parkingapi.Web.exception.ErrorMessage;
 import br.com.jujubaprojects.parkingapi.jwt.JwtToken;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package br.com.jujubaprojects.parkingapi;
+package br.com.jujubaprojects;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

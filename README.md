@@ -11,3 +11,11 @@ here you become the token from one register
 
 here you can change your password when you lose it
 ![alt text](<Captura de tela 2024-02-23 145657.png>)
+
+Here I receive the customer's email and password,
+then I generate a valid token to create the client who will receive this email
+![alt text](<Captura de tela 2024-03-15 162822.png>)
+
+
+so I create about the token a new customer , this exemple i creadet my-self
+![alt text](<Captura de tela 2024-03-15 162709.png>)

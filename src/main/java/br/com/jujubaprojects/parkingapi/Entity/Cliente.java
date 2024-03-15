@@ -15,7 +15,9 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners(AuditingEntityListener.class)// Associa o ouvinte de eventos de auditoria "AuditingEntityListener" à entidade,
+// permitindo a automação de tarefas de auditoria relacionadas ao ciclo de vida da entidade.
+// Útil para manter o controle de alterações em registros e para fins de rastreabilidade e conformidade.
 @Table(name = "clientes")
 @Getter@Setter
 @NoArgsConstructor

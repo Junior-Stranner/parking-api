@@ -6,6 +6,7 @@ import br.com.jujubaprojects.parkingapi.Service.UsuarioService;
 import br.com.jujubaprojects.parkingapi.Web.dto.ClienteCreateDto;
 import br.com.jujubaprojects.parkingapi.Web.dto.ClienteResponseDto;
 import br.com.jujubaprojects.parkingapi.Web.dto.mapper.ClienteMapper;
+import br.com.jujubaprojects.parkingapi.Web.exception.ErrorMessage;
 import br.com.jujubaprojects.parkingapi.exception.CpfUniqueViolationException;
 import br.com.jujubaprojects.parkingapi.jwt.JwtUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,6 +14,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,15 +28,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("api/v1/clientes")
+@Tag(name = "Clientes", description = "Contém todas as operações realizadas ao recurso de um cliente")
 public class ClienteController {
 
     private final ClienteService clienteService;
     private final UsuarioService usuarioService;
 
-    public ClienteController(ClienteService clienteService, UsuarioService usuarioService) {
-        this.clienteService = clienteService;
-        this.usuarioService = usuarioService;
-    }
+   
 
     @Operation(summary = "Criar um novo cliente",
             description = "Recurso para criar um novo cliente vinculado a um usuário cadastrado. " +
@@ -57,7 +57,7 @@ public class ClienteController {
         Cliente cliente = ClienteMapper.toCliente(dto);
         cliente.setUsuario(usuarioService.buscarPorId(userDetails.getId()));
         clienteService.salvar(cliente);
-        return ResponseEntity.status(201).body(ClienteMapper.toDto(cliente));
+        return ResponseEntity.status(201).body(ClienteMapper.ToDto(cliente));
     }
 
 }

@@ -1,9 +1,13 @@
+package br.com.jujubaprojects.parkingapi.jwt;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
+
+import java.io.IOException;
 
 // Importación de SLF4J para el registro de eventos
 @Slf4j
@@ -12,7 +16,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     // Método para manejar solicitudes de autenticación no autorizadas
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException, IOException {
 
         log.info("http Status 401 {}", authException.getMessage()); //Registrando uma mensagem informativa indicando o status
         // HTTP 401 e uma mensagem de exceção

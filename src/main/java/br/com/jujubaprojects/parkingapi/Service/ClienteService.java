@@ -14,10 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class ClienteService {
 
     private final ClienteRepository clienteRepository;
-    public ClienteService(ClienteRepository clienteRepository) {
-        this.clienteRepository = clienteRepository;
-    }
+   
 
+    @SuppressWarnings("null")
     @Transactional
     public Cliente salvar(Cliente cliente) throws CpfUniqueViolationException {
         try {
@@ -29,7 +28,8 @@ public class ClienteService {
     @Transactional(readOnly = true)
     public Cliente buscarPorId(Long id) {
         return clienteRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException((String.format("Cliente id=%s não encontrado no sistema", id)));
+                () -> new EntityNotFoundException(String.format("Cliente id=%s não encontrado no sistema", id))
+        );
     }
 
 }

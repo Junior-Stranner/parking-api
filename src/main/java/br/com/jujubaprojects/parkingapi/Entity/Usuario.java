@@ -45,10 +45,6 @@ public class Usuario implements Serializable {
     @LastModifiedBy
     @Column(name = "modificado_por")
     private String modificadoPor;
-    @OneToOne
-    @JoinColumn(name = "cliente_id", nullable = false)
-    private Cliente cliente;
-
 
 //--------------------------------------------------------------------------
 
