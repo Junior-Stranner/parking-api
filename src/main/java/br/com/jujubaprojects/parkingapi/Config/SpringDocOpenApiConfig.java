@@ -39,6 +39,5 @@ private SecurityScheme securityScheme() {
             .scheme("bearer")
             .bearerFormat("JWT")
             .name("security");
-}
-
+   }
 }

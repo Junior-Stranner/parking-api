@@ -10,6 +10,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 import br.com.jujubaprojects.parkingapi.Web.dto.ClienteCreateDto;
 import br.com.jujubaprojects.parkingapi.Web.dto.ClienteResponseDto;
+import br.com.jujubaprojects.parkingapi.Web.dto.PageableDto;
 import br.com.jujubaprojects.parkingapi.Web.exception.ErrorMessage;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -165,7 +166,7 @@ public class ClienteIT {
         org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(403);
     }
 
-  /*   @Test
+     @Test
     public void buscarClientes_ComPaginacaoPeloAdmin_RetornarClientesComStatus200() {
         PageableDto responseBody = testClient
                 .get()
@@ -243,5 +244,5 @@ public class ClienteIT {
         org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
         org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(403);
 
-    }*/
+    }
 }
