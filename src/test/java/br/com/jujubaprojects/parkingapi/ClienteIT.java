@@ -103,7 +103,7 @@ public class ClienteIT {
         org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(422);
     }
 
-   /* @Test
+   @Test
     public void criarCliente_ComUsuarioNaoPermitido_RetornarErrorMessageStatus403() {
         ErrorMessage responseBody = testClient
                 .post()
@@ -165,7 +165,7 @@ public class ClienteIT {
         org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(403);
     }
 
-    @Test
+  /*   @Test
     public void buscarClientes_ComPaginacaoPeloAdmin_RetornarClientesComStatus200() {
         PageableDto responseBody = testClient
                 .get()

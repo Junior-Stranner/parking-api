@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.TimeZone;
 
 @Configuration
-public class SpringTimezoneConfig {
+public class SpringTimeZoneConfig {
 
     @PostConstruct
     public void timezoneConfig() {
