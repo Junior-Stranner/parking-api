@@ -19,9 +19,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "vagas")
+@Getter@Setter
 @EntityListeners(AuditingEntityListener.class)// Esta classe ouve eventos de ciclo de vida da entidade e executa ações correspondentes
 public class Vaga implements Serializable{
     
@@ -44,7 +47,7 @@ public class Vaga implements Serializable{
     @Column(name = "data_modificacao")
     private LocalDateTime dataModificacao;
     
-    
+
     @CreatedBy
     @Column(name = "criado_por")
     private String criadoPor;
@@ -56,6 +59,8 @@ public class Vaga implements Serializable{
     public enum StatusVaga {
         LIVRE, OCUPADA
     }
+
+
 
     @Override
     public boolean equals(Object o) {

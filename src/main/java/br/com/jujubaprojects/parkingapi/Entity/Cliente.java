@@ -1,6 +1,7 @@
 package br.com.jujubaprojects.parkingapi.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +21,7 @@ import java.util.Objects;
 // Útil para manter o controle de alterações em registros e para fins de rastreabilidade e conformidade.
 @Table(name = "clientes")
 @Getter@Setter
-@NoArgsConstructor
+@NoArgsConstructor @AllArgsConstructor
 public class Cliente implements Serializable {
 
     @Id
