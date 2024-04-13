@@ -9,6 +9,9 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,7 +28,9 @@ import lombok.Setter;
 @Entity
 @Table(name = "vagas")
 @Getter@Setter
-@EntityListeners(AuditingEntityListener.class)// Esta classe ouve eventos de ciclo de vida da entidade e executa ações correspondentes
+@EntityListeners(AuditingEntityListener.class)// Associa o ouvinte de eventos de auditoria "AuditingEntityListener" à entidade,
+// permitindo a automação de tarefas de auditoria relacionadas ao ciclo de vida da entidade.
+// Útil para manter o controle de alterações em registros e para fins de rastreabilidade e conformidade.
 public class Vaga implements Serializable{
     
     @Id
@@ -41,10 +46,12 @@ public class Vaga implements Serializable{
 
     @CreatedDate
     @Column(name = "data_criacao")
+    @DateTimeFormat(pattern = "dd/MM/yyyy - HH:mm")
     private LocalDateTime dataCriacao;
 
     @LastModifiedDate
     @Column(name = "data_modificacao")
+    @DateTimeFormat(pattern = "dd/MM/yyyy - HH:mm")
     private LocalDateTime dataModificacao;
     
 

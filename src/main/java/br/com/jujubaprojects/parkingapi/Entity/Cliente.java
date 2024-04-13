@@ -10,6 +10,9 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -31,11 +34,15 @@ public class Cliente implements Serializable {
     private String nome;
     @Column(name = "cpf", nullable = false ,unique = true ,length = 11)
     private  String cpf;
+
     @CreatedDate
     @Column(name = "data_criacao")
+    @DateTimeFormat(pattern = "dd/MM/yyyy - HH:mm")
     private LocalDateTime dataCriacao;
+
     @LastModifiedDate
     @Column(name = "data_modificacao")
+    @DateTimeFormat(pattern = "dd/MM/yyyy - HH:mm")
     private LocalDateTime dataModificacao;
 
     @CreatedBy
