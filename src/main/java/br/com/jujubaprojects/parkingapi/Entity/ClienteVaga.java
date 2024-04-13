@@ -67,10 +67,6 @@ public class ClienteVaga {
     @Column(name = "deconto",columnDefinition = "decimal(7,2)")
     private BigDecimal desconto;
 
-    @ManyToOne
-    @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
-
     @CreatedDate
     @Column(name = "data_criacao")
     @DateTimeFormat(pattern = "dd/MM/yyyy - HH:mm")
@@ -90,6 +86,15 @@ public class ClienteVaga {
     @LastModifiedBy
     @Column(name = "modificado_por")
     private String modificadoPor;
+
+    
+    @ManyToOne
+    @JoinColumn(name = "id_cliente", nullable = false)
+    private Cliente cliente;
+    @ManyToOne
+    @JoinColumn(name = "id_vaga", nullable = false)
+    private Vaga vaga;
+
 
     @Override
     public int hashCode() {

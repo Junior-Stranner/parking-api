@@ -7,7 +7,7 @@ import br.com.jujubaprojects.parkingapi.Entity.Vaga;
 import br.com.jujubaprojects.parkingapi.Repository.VagaRepository;
 import br.com.jujubaprojects.parkingapi.exception.CodigoUniqueViolationException;
 import br.com.jujubaprojects.parkingapi.exception.EntityNotFoundException;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -27,11 +27,19 @@ public class VagaService {
         }
     }
 
-    @Transactional(/*readOnly = true*/)
+    @Transactional(readOnly = true)
     public Vaga buscarPorCodigo(String codigo) {
         return vagaRepository.findByCodigo(codigo).orElseThrow(
                 () -> new EntityNotFoundException(String.format("Vaga com código '%s' não foi encontrada", codigo))
         );
     }
+
+    @Transactional(readOnly = true)
+    public Vaga buscarPorVagaLivre() {
+        return vagaRepository.findFirstByStatus(LIVRE).orElseThrow(
+                () -> new EntityNotFoundException("Nenhuma vaga livre foi encontrada")
+        );
+    }
+
 
 }

@@ -9,4 +9,6 @@ import br.com.jujubaprojects.parkingapi.Entity.Vaga;
 public interface VagaRepository extends JpaRepository< Vaga, Long>{
    
     Optional<Vaga> findByCodigo(String codigo);
+
+    Optional<Vaga> findFistByStatus(Vaga.StatusVaga statusVaga);
 }
