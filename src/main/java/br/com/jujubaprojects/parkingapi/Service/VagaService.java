@@ -4,6 +4,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.jujubaprojects.parkingapi.Entity.Vaga;
+import br.com.jujubaprojects.parkingapi.Entity.Vaga.StatusVaga;
 import br.com.jujubaprojects.parkingapi.Repository.VagaRepository;
 import br.com.jujubaprojects.parkingapi.exception.CodigoUniqueViolationException;
 import br.com.jujubaprojects.parkingapi.exception.EntityNotFoundException;

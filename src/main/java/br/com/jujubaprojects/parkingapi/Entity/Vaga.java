@@ -67,8 +67,6 @@ public class Vaga implements Serializable{
         LIVRE, OCUPADA
     }
 
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
