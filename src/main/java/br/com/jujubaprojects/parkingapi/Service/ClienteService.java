@@ -18,6 +18,7 @@ public class ClienteService {
 
     private final ClienteRepository clienteRepository;
 
+   
     @Transactional
     public Cliente salvar(Cliente cliente) throws CpfUniqueViolationException {
         try {

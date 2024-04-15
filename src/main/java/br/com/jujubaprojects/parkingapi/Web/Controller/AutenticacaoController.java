@@ -53,7 +53,6 @@ public class AutenticacaoController {
     private final AuthenticationManager authenticationManager;
 
    
-
     // Endpoint para autenticar o usuário
     @Operation(summary = "Authenticar na API", description = "Recurso para authenticar na AOI",
             responses = {

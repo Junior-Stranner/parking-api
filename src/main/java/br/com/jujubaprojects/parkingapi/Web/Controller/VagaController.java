@@ -38,6 +38,8 @@ public class VagaController {
 
     private final VagaService vagaService;
 
+    
+
     @Operation(summary = "Criar uma nova vaga", description = "Recurso para criar uma nova vaga." +
             "Requisição exige uso de um bearer token. Acesso restrito a Role='ADMIN'",
             security = @SecurityRequirement(name = "security"),

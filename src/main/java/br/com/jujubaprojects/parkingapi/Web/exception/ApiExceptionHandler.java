@@ -21,6 +21,8 @@ import br.com.jujubaprojects.parkingapi.exception.UsernameUniqueViolationExcepti
 @RestControllerAdvice
 public class ApiExceptionHandler {
 
+  
+
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ErrorMessage> accessDeniedException(AccessDeniedException ex, HttpServletRequest request) {
         log.error("Api Error - ", ex);

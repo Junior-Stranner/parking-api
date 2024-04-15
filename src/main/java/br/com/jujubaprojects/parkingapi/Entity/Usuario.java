@@ -60,6 +60,8 @@ public class Usuario implements Serializable {
         ROLE_ADMIN, ROLE_CLIENTE
     }
 
+   
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

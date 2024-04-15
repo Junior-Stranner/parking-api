@@ -13,6 +13,8 @@ public class ClienteVagasService {
     
     private final ClienteVagaRepository clienteVagaRepository;
 
+   
+
     @Transactional
     public ClienteVaga salvar(ClienteVaga clienteVaga){
         return clienteVagaRepository.save(clienteVaga);

@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter
-@NoArgsConstructor @AllArgsConstructor
+@AllArgsConstructor @NoArgsConstructor
 @Entity
 @Table(name = "clientes_tem_vagas")
 @EntityListeners(AuditingEntityListener.class)// Associa o ouvinte de eventos de auditoria "AuditingEntityListener" à entidade,
@@ -95,6 +95,7 @@ public class ClienteVaga {
     @JoinColumn(name = "id_vaga", nullable = false)
     private Vaga vaga;
 
+    
 
     @Override
     public int hashCode() {
@@ -119,5 +120,4 @@ public class ClienteVaga {
     }
 
 
-    
 }

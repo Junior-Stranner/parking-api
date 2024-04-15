@@ -10,6 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Data
 public class UsuarioCreateDto {
 
     @NotBlank

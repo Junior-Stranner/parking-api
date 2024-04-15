@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -28,6 +30,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "vagas")
 @Getter@Setter
+@NoArgsConstructor @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)// Associa o ouvinte de eventos de auditoria "AuditingEntityListener" à entidade,
 // permitindo a automação de tarefas de auditoria relacionadas ao ciclo de vida da entidade.
 // Útil para manter o controle de alterações em registros e para fins de rastreabilidade e conformidade.
@@ -66,6 +69,8 @@ public class Vaga implements Serializable{
     public enum StatusVaga {
         LIVRE, OCUPADA
     }
+
+    
 
     @Override
     public boolean equals(Object o) {

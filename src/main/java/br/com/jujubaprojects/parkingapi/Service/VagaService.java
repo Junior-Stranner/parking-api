@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class VagaService {
     
+    private static final StatusVaga LIVRE = null;
     private final VagaRepository vagaRepository;
 
     @Transactional
@@ -37,7 +38,7 @@ public class VagaService {
 
     @Transactional(readOnly = true)
     public Vaga buscarPorVagaLivre() {
-        return vagaRepository.findFirstByStatus(LIVRE).orElseThrow(
+        return vagaRepository.findFirstByStatus(LIVRE).orElseThrow(// Aqui está o erro , não funciona o LIVRE 
                 () -> new EntityNotFoundException("Nenhuma vaga livre foi encontrada")
         );
     }

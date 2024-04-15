@@ -15,8 +15,6 @@ public class JwtUserDetailsService implements UserDetailsService { // Implementa
 
     private final UsuarioService usuarioService; // Injeta o serviço de usuário
 
-  
-
     // Implementa o método da interface UserDetailsService para carregar os detalhes do usuário pelo username
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

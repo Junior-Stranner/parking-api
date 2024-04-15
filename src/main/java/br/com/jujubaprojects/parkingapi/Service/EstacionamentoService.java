@@ -12,12 +12,14 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
-public class Estacionamento {
+public class EstacionamentoService {
     
 
     private final ClienteVagasService clienteVagasService;
     private final ClienteService clienteService;
     private final VagaService vagaService;
+
+    
 
     public ClienteVaga checkIn(ClienteVaga clienteVaga){
         Cliente cliente = clienteService.buscarPorCpf(clienteVaga.getCliente().getCpf());

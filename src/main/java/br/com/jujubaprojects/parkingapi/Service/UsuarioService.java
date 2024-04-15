@@ -24,6 +24,7 @@ public class UsuarioService {
     private final UsuarioRepository usuarioRepository; // Declaração do atributo usuarioRepository que é uma instância de UsuarioRepository
     private final PasswordEncoder passwordEncoder; // Declaração do atributo passwordEncoder que é uma instância de PasswordEncoder
 
+   
 
     @Transactional // Esta anotação indica que o método é transacional, ou seja, será executado em uma transação de banco de dados
     public Usuario salvar(Usuario usuario) { // Método para salvar um usuário
