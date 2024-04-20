@@ -21,8 +21,8 @@ public class EstacionamentoService {
     private final ClienteService clienteService;
     private final VagaService vagaService;
 
-    
 
+    @Transactional
     public ClienteVaga checkIn(ClienteVaga clienteVaga){
         Cliente cliente = clienteService.buscarPorCpf(clienteVaga.getCliente().getCpf());
         clienteVaga.setCliente(cliente);
@@ -32,7 +32,7 @@ public class EstacionamentoService {
         clienteVaga.setVaga(vaga);
 
         clienteVaga.setDataEntrada(LocalDateTime.now());
-        clienteVaga.setRebico(EstacionamentoUtils.gerarRecibo());
+        clienteVaga.setRecibo(EstacionamentoUtils.gerarRecibo());
 
         return clienteVagaService.salvar(clienteVaga);
     }

@@ -43,7 +43,7 @@ import static io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY;
 @Tag(name = "Clientes", description = "Contém todas as opereções relativas ao recurso de um cliente")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("api/v1/clientes")
+@RequestMapping("/api/v1/clientes")
 public class ClienteController {
 
     private final ClienteService clienteService;

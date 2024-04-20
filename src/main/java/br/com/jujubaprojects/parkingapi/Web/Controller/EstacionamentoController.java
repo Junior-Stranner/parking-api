@@ -30,7 +30,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("api/v1/estacionamento")
+@RequestMapping("/api/v1/estacionamento")
 public class EstacionamentoController {
 
     private final EstacionamentoService estacionamentoService;
@@ -59,7 +59,7 @@ public class EstacionamentoController {
                                     schema = @Schema(implementation = ErrorMessage.class)))
             })
     @PostMapping("/check-in")
-    @PreAuthorize("hasRole('ADMIN'), ('CLIENTE')")
+    @PreAuthorize("hasRole('ADMIN',CLIENTE')")
     public ResponseEntity<EstacionamentoResponseDto> checkIn(@RequestBody @Valid EstacionamentoCreateDto dto) {
         ClienteVaga clienteVaga = ClienteVagaMapper.toClienteVaga(dto);
         estacionamentoService.checkIn(clienteVaga);
@@ -69,7 +69,7 @@ public class EstacionamentoController {
             // Obtém a URI atual da requisição e adiciona o código da vaga como parte da URI
            .fromCurrentRequestUri().path("/{recibo}")
            // Expande o código da vaga na URI
-           .buildAndExpand(clienteVaga.getRebico())
+           .buildAndExpand(clienteVaga.getRecibo())
             // Converte a URI em um objeto URI
            .toUri();
     // Retorna uma resposta com o código de status 201 Created e a URI do recurso criado

@@ -33,7 +33,7 @@ import io.swagger.v3.oas.annotations.headers.Header;
 @Tag(name = "Vagas", description = "Contém todas as opereções relativas ao recurso de uma vaga")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("api/v1/vagas")
+@RequestMapping("/api/v1/vagas")
 public class VagaController {
 
     private final VagaService vagaService;

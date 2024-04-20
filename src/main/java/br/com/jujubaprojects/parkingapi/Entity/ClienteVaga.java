@@ -40,7 +40,7 @@ public class ClienteVaga {
     private long id;
 
     @Column(name = "numero_recibo", nullable = false, unique = true, length = 15)
-    private String rebico;
+    private String recibo;
 
     @Column( name = "placa", nullable = false, unique = true , length = 8)
     private String placa;

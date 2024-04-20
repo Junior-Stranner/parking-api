@@ -5,10 +5,9 @@ import br.com.jujubaprojects.parkingapi.Repository.ClienteVagaRepository;
 import br.com.jujubaprojects.parkingapi.Repository.Projection.ClienteVagaProjection;
 import br.com.jujubaprojects.parkingapi.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
