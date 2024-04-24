@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
@@ -12,15 +13,18 @@ import br.com.jujubaprojects.parkingapi.Web.dto.ClienteCreateDto;
 import br.com.jujubaprojects.parkingapi.Web.dto.ClienteResponseDto;
 import br.com.jujubaprojects.parkingapi.Web.dto.PageableDto;
 import br.com.jujubaprojects.parkingapi.Web.exception.ErrorMessage;
+@ContextConfiguration
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(scripts = "/sql/clientes/clientes-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(scripts = "/sql/clientes/clientes-delete.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class ClienteIT {
     
+
         @Autowired
         WebTestClient testClient;
     
+        @SuppressWarnings("null")
         @Test
         public void criarCliente_ComDadosValidos_RetornarClienteComStatus201() {
             ClienteResponseDto responseBody = testClient
@@ -40,6 +44,7 @@ public class ClienteIT {
             org.assertj.core.api.Assertions.assertThat(responseBody.getCpf()).isEqualTo("91191064085");
         }
     
+        @SuppressWarnings("null")
         @Test
         public void criarCliente_ComCpfJaCadastrado_RetornarErrorMessageStatus409() {
             ErrorMessage responseBody = testClient
@@ -57,6 +62,7 @@ public class ClienteIT {
             org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(409);
         }
     
+        @SuppressWarnings("null")
         @Test
         public void criarCliente_ComDadosInvalidos_RetornarErrorMessageStatus422() {
             ErrorMessage responseBody = testClient
@@ -102,6 +108,7 @@ public class ClienteIT {
             org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(422);
         }
     
+        @SuppressWarnings("null")
         @Test
         public void criarCliente_ComUsuarioNaoPermitido_RetornarErrorMessageStatus403() {
             ErrorMessage responseBody = testClient
@@ -119,6 +126,7 @@ public class ClienteIT {
             org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(403);
         }
     
+        @SuppressWarnings("null")
         @Test
         public void buscarCliente_ComIdExistentePeloAdmin_RetornarClienteComStatus200() {
             ClienteResponseDto responseBody = testClient
@@ -134,6 +142,7 @@ public class ClienteIT {
             org.assertj.core.api.Assertions.assertThat(responseBody.getId()).isEqualTo(10);
         }
     
+        @SuppressWarnings("null")
         @Test
         public void buscarCliente_ComIdInexistentePeloAdmin_RetornarErrorMessageComStatus404() {
             ErrorMessage responseBody = testClient
@@ -149,6 +158,7 @@ public class ClienteIT {
             org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(404);
         }
     
+        @SuppressWarnings("null")
         @Test
         public void buscarCliente_ComIdExistentePeloCliente_RetornarErrorMessageComStatus403() {
             ErrorMessage responseBody = testClient
@@ -164,6 +174,7 @@ public class ClienteIT {
             org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(403);
         }
     
+        @SuppressWarnings("null")
         @Test
         public void buscarClientes_ComPaginacaoPeloAdmin_RetornarClientesComStatus200() {
             PageableDto responseBody = testClient
@@ -195,6 +206,7 @@ public class ClienteIT {
             org.assertj.core.api.Assertions.assertThat(responseBody.getTotalPages()).isEqualTo(2);
         }
     
+        @SuppressWarnings("null")
         @Test
         public void buscarClientes_ComPaginacaoPeloCliente_RetornarErrorMessageComStatus403() {
             ErrorMessage responseBody = testClient
@@ -210,6 +222,7 @@ public class ClienteIT {
             org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(403);
         }
     
+        @SuppressWarnings("null")
         @Test
         public void buscarCliente_ComDadosDoTokenDeCliente_RetornarClienteComStatus200() {
             ClienteResponseDto responseBody = testClient
@@ -228,6 +241,7 @@ public class ClienteIT {
     
         }
     
+        @SuppressWarnings("null")
         @Test
         public void buscarCliente_ComDadosDoTokenDeAdministrador_RetornarErrorMessageComStatus403() {
             ErrorMessage responseBody = testClient
@@ -244,4 +258,6 @@ public class ClienteIT {
     
         }
     
-}
+    }
+    
+    

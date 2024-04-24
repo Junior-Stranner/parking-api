@@ -11,7 +11,7 @@ import br.com.jujubaprojects.parkingapi.Web.dto.PageableDto;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PageableMapper {
 
-    public static PageableDto toDto(Page page) {
+    public static PageableDto toDto(@SuppressWarnings("rawtypes") Page page) {
         return new ModelMapper().map(page, PageableDto.class);
     }
     

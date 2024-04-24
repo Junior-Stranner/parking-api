@@ -36,11 +36,25 @@ public class SpringSecurityConfig  {
                     .formLogin(form -> form.disable())
                     .httpBasic(basic -> basic.disable())
                     .authorizeHttpRequests(auth -> auth
-                            .requestMatchers(HttpMethod.POST, "api/v1/usuarios").permitAll()
-                            .requestMatchers(HttpMethod.POST, "api/v1/auth").permitAll()
-                            .requestMatchers(HttpMethod.GET,"api/v1/usuarios").permitAll()
-                            .requestMatchers(HttpMethod.GET, "api/v1/usuarios/{id}").permitAll()
-                            .requestMatchers(HttpMethod.PATCH, "api/v1/usuarios/{id}").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/api/v1/auth").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/api/v1/usuarios").permitAll()
+                            .requestMatchers(HttpMethod.GET,"/api/v1/usuarios").hasRole("ADMIN")
+                            .requestMatchers(HttpMethod.GET, "/api/v1/usuarios/{id}").permitAll()
+                            .requestMatchers(HttpMethod.PATCH, "/api/v1/usuarios/{id}").permitAll()
+
+                            .requestMatchers(HttpMethod.POST, "/api/v1/clientes").permitAll()
+                            .requestMatchers(HttpMethod.GET, "/api/v1/clientes").permitAll()
+                            .requestMatchers(HttpMethod.GET, "/api/v1/clientes/{id}").hasRole("ADMIn")
+                            .requestMatchers(HttpMethod.GET, "/api/v1/clientes/detalhes").permitAll()
+
+                            .requestMatchers(HttpMethod.POST, "/api/v1/estacionamento").hasRole("ADMIN")
+                            .requestMatchers(HttpMethod.GET, "/api/v1/estacionamento").permitAll()
+                            .requestMatchers(HttpMethod.PUT, "/api/v1/estacionamento").hasRole("ADMIN")
+                            
+                            .requestMatchers(HttpMethod.POST, "/api/v1/vagas").hasRole("ADMIN")
+                            .requestMatchers(HttpMethod.GET, "/api/v1/vagas").hasRole("ADMIN")
+
+
                     //        .requestMatchers(HttpMethod.POST,"api/v1/clientes").hasRole("CLIENTE")
                             .requestMatchers(DOCUMENTATION_OPENAPI).permitAll()
                             .anyRequest().authenticated()

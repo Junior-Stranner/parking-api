@@ -22,39 +22,61 @@ public class EstacionamentoService {
     private final VagaService vagaService;
 
 
-    @Transactional
-    public ClienteVaga checkIn(ClienteVaga clienteVaga){
-        Cliente cliente = clienteService.buscarPorCpf(clienteVaga.getCliente().getCpf());
-        clienteVaga.setCliente(cliente);
+   // Método para registrar o check-in de um cliente em uma vaga de estacionamento
+@Transactional
+public ClienteVaga checkIn(ClienteVaga clienteVaga) {
+    // Busca o cliente pelo CPF fornecido na instância de ClienteVaga
+    Cliente cliente = clienteService.buscarPorCpf(clienteVaga.getCliente().getCpf());
+    // Define o cliente encontrado como o cliente associado à instância de ClienteVaga
+    clienteVaga.setCliente(cliente);
 
-        Vaga vaga = vagaService.buscarPorVagaLivre();
-        vaga.setStatus(Vaga.StatusVaga.OCUPADA);
-        clienteVaga.setVaga(vaga);
+    // Busca uma vaga livre no estacionamento
+    Vaga vaga = vagaService.buscarPorVagaLivre();
+    // Define o status da vaga como OCUPADA
+    vaga.setStatus(Vaga.StatusVaga.OCUPADA);
+    // Associa a vaga encontrada à instância de ClienteVaga
+    clienteVaga.setVaga(vaga);
 
-        clienteVaga.setDataEntrada(LocalDateTime.now());
-        clienteVaga.setRecibo(EstacionamentoUtils.gerarRecibo());
+    // Define a data e hora de entrada como o momento atual
+    clienteVaga.setDataEntrada(LocalDateTime.now());
+    // Gera um recibo para o cliente
+    clienteVaga.setRecibo(EstacionamentoUtils.gerarRecibo());
 
-        return clienteVagaService.salvar(clienteVaga);
-    }
-    @Transactional
-    public ClienteVaga checkOut(String recibo) {
-        ClienteVaga clienteVaga = clienteVagaService.buscarPorRecibo(recibo);
+    // Salva a instância de ClienteVaga no banco de dados e retorna
+    return clienteVagaService.salvar(clienteVaga);
+}
 
-        LocalDateTime dataSaida = LocalDateTime.now();
+// Método para registrar o check-out de um cliente com base no recibo fornecido
+@Transactional
+public ClienteVaga checkOut(String recibo) {
+    // Busca a instância de ClienteVaga associada ao recibo fornecido
+    ClienteVaga clienteVaga = clienteVagaService.buscarPorRecibo(recibo);
 
-        BigDecimal valor = EstacionamentoUtils.calcularCusto(clienteVaga.getDataEntrada(), dataSaida);
-        clienteVaga.setValor(valor);
+    // Define a data e hora de saída como o momento atual
+    LocalDateTime dataSaida = LocalDateTime.now();
 
-        long totalDeVezes = clienteVagaService.getTotalDeVezesEstacionamentoCompleto(clienteVaga.getCliente().getCpf());
+    // Calcula o custo total do estacionamento com base na data e hora de entrada e saída
+    BigDecimal valor = EstacionamentoUtils.calcularCusto(clienteVaga.getDataEntrada(), dataSaida);
+    // Define o valor calculado como o valor associado à instância de ClienteVaga
+    clienteVaga.setValor(valor);
 
-        BigDecimal desconto = EstacionamentoUtils.calcularDesconto(valor, totalDeVezes);
-        clienteVaga.setDesconto(desconto);
+    // Obtém o total de vezes que o cliente utilizou o estacionamento completo
+    long totalDeVezes = clienteVagaService.getTotalDeVezesEstacionamentoCompleto(clienteVaga.getCliente().getCpf());
 
-        clienteVaga.setDataSaida(dataSaida);
-        clienteVaga.getVaga().setStatus(Vaga.StatusVaga.LIVRE);
+    // Calcula o desconto com base no valor total e no total de vezes utilizado
+    BigDecimal desconto = EstacionamentoUtils.calcularDesconto(valor, totalDeVezes);
+    // Define o desconto calculado como o desconto associado à instância de ClienteVaga
+    clienteVaga.setDesconto(desconto);
 
-        return clienteVagaService.salvar(clienteVaga);
-    }
+    // Define a data e hora de saída como o momento atual
+    clienteVaga.setDataSaida(dataSaida);
+    // Define o status da vaga associada à instância de ClienteVaga como LIVRE
+    clienteVaga.getVaga().setStatus(Vaga.StatusVaga.LIVRE);
+
+    // Salva a instância de ClienteVaga no banco de dados e retorna
+    return clienteVagaService.salvar(clienteVaga);
+}
+
 
 
 }

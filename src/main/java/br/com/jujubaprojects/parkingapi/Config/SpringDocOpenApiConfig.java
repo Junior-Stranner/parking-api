@@ -29,6 +29,7 @@ public class SpringDocOpenApiConfig {
             .contact(new Contact()  // Informações de contato.
                 .name("Junior Stranner")  // Nome do contato.
                 .email("Junior@spring-park.com")));  // Endereço de e-mail do contato.
+
 }
 
 private SecurityScheme securityScheme() {

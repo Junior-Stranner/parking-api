@@ -5,10 +5,13 @@ import br.com.jujubaprojects.parkingapi.jwt.JwtToken;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-
+@ContextConfiguration
+@SpringBootTest
 public class JwtAuthentication {
 
     @Autowired

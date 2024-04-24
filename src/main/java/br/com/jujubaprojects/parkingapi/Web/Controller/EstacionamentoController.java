@@ -3,6 +3,7 @@ package br.com.jujubaprojects.parkingapi.Web.Controller;
 import br.com.jujubaprojects.parkingapi.Service.ClienteService;
 import br.com.jujubaprojects.parkingapi.Service.ClienteVagaService;
 import br.com.jujubaprojects.parkingapi.Web.exception.ErrorMessage;
+import br.com.jujubaprojects.parkingapi.jwt.JwtUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -11,15 +12,23 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.jujubaprojects.parkingapi.Entity.ClienteVaga;
+import br.com.jujubaprojects.parkingapi.Repository.Projection.ClienteVagaProjection;
 import br.com.jujubaprojects.parkingapi.Service.EstacionamentoService;
 import br.com.jujubaprojects.parkingapi.Web.dto.EstacionamentoCreateDto;
 import br.com.jujubaprojects.parkingapi.Web.dto.EstacionamentoResponseDto;
+import br.com.jujubaprojects.parkingapi.Web.dto.PageableDto;
 import br.com.jujubaprojects.parkingapi.Web.dto.mapper.ClienteVagaMapper;
+import br.com.jujubaprojects.parkingapi.Web.dto.mapper.PageableMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -27,6 +36,9 @@ import java.net.URI;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 @RequiredArgsConstructor
 @RestController
@@ -35,6 +47,7 @@ public class EstacionamentoController {
 
     private final EstacionamentoService estacionamentoService;
     private final ClienteVagaService clienteVagaService;
+    @SuppressWarnings("unused")
     private final ClienteService clienteService;
 
 
@@ -59,10 +72,11 @@ public class EstacionamentoController {
                                     schema = @Schema(implementation = ErrorMessage.class)))
             })
     @PostMapping("/check-in")
-    @PreAuthorize("hasRole('ADMIN',CLIENTE')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<EstacionamentoResponseDto> checkIn(@RequestBody @Valid EstacionamentoCreateDto dto) {
         ClienteVaga clienteVaga = ClienteVagaMapper.toClienteVaga(dto);
         estacionamentoService.checkIn(clienteVaga);
+        @SuppressWarnings("unused")
         EstacionamentoResponseDto responseDto = ClienteVagaMapper.toDto(clienteVaga);
 
         URI location = ServletUriComponentsBuilder
@@ -124,7 +138,16 @@ public class EstacionamentoController {
         EstacionamentoResponseDto dto = ClienteVagaMapper.toDto(clienteVaga);
         return ResponseEntity.ok(dto);
     }
-
-
+ 
+    @GetMapping("/cpf/{cpf}")
+    @PreAuthorize("hasRole('CLIENTE')")
+    public ResponseEntity<PageableDto> getAllEstacionametosPorCpf(@AuthenticationPrincipal JwtUserDetails user, @PathVariable String cpf ,
+                                                                @PageableDefault(size = 5 , sort = "dataEntrada",
+                                                                direction = Sort.Direction.ASC)Pageable pageable){
+    Page<ClienteVagaProjection> projection = clienteVagaService.buscarTodosPorClienteCpf(cpf, pageable);
+    PageableDto dto = PageableMapper.toDto(projection);
+        return ResponseEntity.ok().body(dto);
+ 
+    }
 
 }

@@ -53,15 +53,13 @@ public class EstacionamentoUtils {
 
     //2023-03-16T15:23:48.616463500
     // 20230316-152121
-    
-    @SuppressWarnings("unused")
-    public
-    static String gerarRecibo(){
-        LocalDateTime date = LocalDateTime.now();
-        String recibo = date.toString().substring(0,19);
-        return recibo.replace("-", "")
-           .replace(":", "")
-           .replace("T", "-");
 
+    public static String gerarRecibo(){ // Método estático para gerar um recibo
+        LocalDateTime date = LocalDateTime.now(); // Obtém a data e hora atual
+        String recibo = date.toString().substring(0,19); // Converte a data e hora em uma string e extrai os primeiros 19 caracteres (ano, mês, dia, hora, minutos e segundos)
+        return recibo.replace("-", "") // Remove o caractere "-" da string
+                .replace(":", "") // Remove o caractere ":" da string
+                .replace("T", "-"); // Substitui o caractere "T" por "-"
     }
+
 }
