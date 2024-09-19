@@ -17,7 +17,6 @@ import br.com.jujubaprojects.parkingapi.Web.dto.VagaCreateDto;
 @Sql(scripts = "/sql/vagas/vagas-delete.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class VagaIT {
 
-    
     @Autowired
     WebTestClient testClient;
 
@@ -35,7 +34,7 @@ public class VagaIT {
     }
 
     @Test
-    public void criarVaga_ComCodigoJaExistente_RetornarErrorMessageComStatus409() {
+    public void criarVaga_ComCodidoJaExistente_RetornarErrorMessageComStatus409() {
         testClient
                 .post()
                 .uri("/api/v1/vagas")
@@ -48,11 +47,10 @@ public class VagaIT {
                 .jsonPath("status").isEqualTo(409)
                 .jsonPath("method").isEqualTo("POST")
                 .jsonPath("path").isEqualTo("/api/v1/vagas");
-
     }
 
     @Test
-    public void criarVaga_ComDadoInvalidos_RetornarErrorMessageComStatus422() {
+    public void criarVaga_ComDadosInvalidos_RetornarErrorMessageComStatus422() {
         testClient
                 .post()
                 .uri("/api/v1/vagas")
@@ -80,7 +78,6 @@ public class VagaIT {
                 .jsonPath("path").isEqualTo("/api/v1/vagas");
     }
 
-
     @Test
     public void buscarVaga_ComCodigoExistente_RetornarVagaComStatus200() {
         testClient
@@ -101,7 +98,7 @@ public class VagaIT {
         testClient
                 .get()
                 .uri("/api/v1/vagas/{codigo}", "A-10")
-                 .headers(JwtAuthentication.getHeaderAuthorization(testClient, "ana@email.com", "123456"))
+                .headers(JwtAuthentication.getHeaderAuthorization(testClient, "ana@email.com", "123456"))
                 .exchange()
                 .expectStatus().isNotFound()
                 .expectBody()
@@ -114,14 +111,14 @@ public class VagaIT {
     public void buscarVaga_ComUsuarioSemPermissaoDeAcesso_RetornarErrorMessageComStatus403() {
         testClient
                 .get()
-                .uri("/api/v1/vagas/{codigo}", "A-01")
-                 .headers(JwtAuthentication.getHeaderAuthorization(testClient, "bia@email.com", "123456"))
+                .uri("/api/v1/vagas/{codigo}", "A-03")
+                .headers(JwtAuthentication.getHeaderAuthorization(testClient, "bia@email.com", "123456"))
                 .exchange()
                 .expectStatus().isForbidden()
                 .expectBody()
                 .jsonPath("status").isEqualTo(403)
                 .jsonPath("method").isEqualTo("GET")
-                .jsonPath("path").isEqualTo("/api/v1/vagas/A-01");
+                .jsonPath("path").isEqualTo("/api/v1/vagas/A-03");
     }
 
     @Test
@@ -131,7 +128,7 @@ public class VagaIT {
                 .uri("/api/v1/vagas")
                 .contentType(MediaType.APPLICATION_JSON)
                 .headers(JwtAuthentication.getHeaderAuthorization(testClient, "bia@email.com", "123456"))
-                .bodyValue(new VagaCreateDto("A-05", "OCUPADA"))
+                .bodyValue(new VagaCreateDto("A-05", "LIVRE"))
                 .exchange()
                 .expectStatus().isForbidden()
                 .expectBody()

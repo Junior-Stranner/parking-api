@@ -61,6 +61,10 @@ public class UsuarioService {
             throw new PasswordInvalidException("Sua senha não confere.");
         }
 
+      if (passwordEncoder.matches(novaSenha, user.getPassword())) {// Verifica se a nova senha é a mesma que a senha atual do usuário.
+            throw new PasswordInvalidException("exception.PasswordInvalidException.same");// Se for igual, lança uma exceção personalizada PasswordInvalidException.
+       }
+
         user.setPassword(passwordEncoder.encode(novaSenha)); // Atualiza a senha do usuário
         return user; // Retorna o usuário atualizado
     }

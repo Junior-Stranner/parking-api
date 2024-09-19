@@ -12,10 +12,22 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
-    @Query("select c from Cliente c")
-    Page<ClienteProjection> findAllPageable(Pageable pageable);
+   // Verifica se existe algum cliente com o CPF informado
+   @Query("select (count(c) > 0) from Cliente c where c.cpf = :cpf")
+   boolean existsByCpf(String cpf);
 
-    Cliente findByUsuarioId(Long id);
+   // Verifica se existe algum cliente associado ao username (e-mail) informado
+   @Query("select (count(c) > 0) from Cliente c where c.usuario.username = :username")
+   boolean existsByEmail(String username);
 
-    Optional< Cliente> findByCpf(String cpf);
+   // Busca todos os clientes de forma paginada, retornando apenas os dados definidos na projeção ClienteProjection
+   @Query("SELECT c FROM Cliente c")
+   Page<ClienteProjection> findAllPageable(Pageable pageable);
+
+   // Busca um cliente pelo ID do usuário associado
+   Cliente findByUsuarioId(Long id);
+
+   // Retorna um cliente como Optional, buscando pelo CPF informado
+   Optional<Cliente> findByCpf(String cpf);
+
 }

@@ -18,10 +18,11 @@ import java.io.IOException; // Importa a exceção IOException
 public class JwtAuthorizationFilter extends OncePerRequestFilter { // Classe que implementa um filtro de autorização JWT executado uma vez por solicitação
 
     @Autowired // Anotação para injeção de dependência
-    private JwtUserDetailsService detailsService; // Serviço para detalhes do usuário JWT
+    private JwtUserDetailsServiceImpl detailsService; // Serviço para detalhes do usuário JWT
+
+
 
     // Método que realiza o filtro interno da requisição
-    @SuppressWarnings("null")
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         final String token = request.getHeader(JwtUtils.JWT_AUTHORIZATION); // Obtém o token JWT do cabeçalho da requisição

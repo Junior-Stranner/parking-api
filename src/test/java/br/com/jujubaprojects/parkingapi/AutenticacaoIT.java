@@ -16,8 +16,8 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(scripts = "/sql/usuarios/usuarios-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(scripts = "/sql/usuarios/usuarios-delete.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+public class AutenticacaoIT {
 
-public class AuthenticacaoIT {
     @Autowired
     WebTestClient testClient;
 
@@ -37,7 +37,7 @@ public class AuthenticacaoIT {
     }
 
     @Test
-    public void autenticar_ComCredenciaisInvalidas_RetornarErrorMessageStatus400() {
+    public void autenticar_ComCredenciaisInvalidas_RetornarTokenComStatus400() {
         ErrorMessage responseBody = testClient
                 .post()
                 .uri("/api/v1/auth")
@@ -66,7 +66,7 @@ public class AuthenticacaoIT {
     }
 
     @Test
-    public void autenticar_ComUsernameInvalido_RetornarErrorMessageStatus422() {
+    public void autenticar_ComUsernameInvalido_RetornarErrorMessageComStatus422() {
         ErrorMessage responseBody = testClient
                 .post()
                 .uri("/api/v1/auth")
@@ -92,10 +92,11 @@ public class AuthenticacaoIT {
 
         org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
         org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(422);
+
     }
 
     @Test
-    public void autenticar_ComPasswordInvalido_RetornarErrorMessageStatus422() {
+    public void autenticar_ComPasswordInvalido_RetornarErrorMessageComStatus422() {
         ErrorMessage responseBody = testClient
                 .post()
                 .uri("/api/v1/auth")
@@ -126,7 +127,7 @@ public class AuthenticacaoIT {
                 .post()
                 .uri("/api/v1/auth")
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(new UsuarioLoginDto("ana@email.com", "123456789"))
+                .bodyValue(new UsuarioLoginDto("ana@email.com", "1234567"))
                 .exchange()
                 .expectStatus().isEqualTo(422)
                 .expectBody(ErrorMessage.class)
@@ -134,7 +135,6 @@ public class AuthenticacaoIT {
 
         org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
         org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(422);
+
     }
-
-
 }
