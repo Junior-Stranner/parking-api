@@ -37,7 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.jujubaprojects.parkingapi.Web.dto.UsuarioLoginDto;
 import br.com.jujubaprojects.parkingapi.Web.exception.ErrorMessage;
 import br.com.jujubaprojects.parkingapi.jwt.JwtToken;
-import br.com.jujubaprojects.parkingapi.jwt.JwtUserDetailsServiceImpl;
+import br.com.jujubaprojects.parkingapi.jwt.JwtUserDetailsService;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -47,7 +47,7 @@ import br.com.jujubaprojects.parkingapi.jwt.JwtUserDetailsServiceImpl;
 public class AutenticacaoController {
 
     // Injeção do serviço responsável pela autenticação JWT do usuário
-    private final JwtUserDetailsServiceImpl jwtUserDetailsService;
+    private final JwtUserDetailsService jwtUserDetailsService;
     
     // Injeção do gerenciador de autenticação do Spring Security
     private final AuthenticationManager authenticationManager;
@@ -69,7 +69,8 @@ public class AutenticacaoController {
         log.info("Processo de autenticação pelo login {}", dto.getUsername());
         try {
             // Criação de um token de autenticação com as credenciais fornecidas
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword());
+            UsernamePasswordAuthenticationToken authenticationToken = new
+                     UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword());
 
             // Autenticação do usuário utilizando o gerenciador de autenticação do Spring Security
             authenticationManager.authenticate(authenticationToken);

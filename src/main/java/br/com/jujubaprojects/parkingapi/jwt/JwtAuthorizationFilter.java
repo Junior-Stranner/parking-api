@@ -18,7 +18,7 @@ import java.io.IOException; // Importa a exceção IOException
 public class JwtAuthorizationFilter extends OncePerRequestFilter { // Classe que implementa um filtro de autorização JWT executado uma vez por solicitação
 
     @Autowired // Anotação para injeção de dependência
-    private JwtUserDetailsServiceImpl detailsService; // Serviço para detalhes do usuário JWT
+    private JwtUserDetailsService detailsService; // Serviço para detalhes do usuário JWT
 
 
 

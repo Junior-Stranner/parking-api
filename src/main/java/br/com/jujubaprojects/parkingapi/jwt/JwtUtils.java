@@ -87,11 +87,18 @@ public class JwtUtils {
         return false;
     }
 
-    // Removes "Bearer " prefix from the token string before parsing
-    private static String refactorToken(String token) {
-        if (token.contains(JWT_BEARER)) {
-            return token.substring(JWT_BEARER.length());
-        }
-        return token;
+   // Remove o prefixo "Bearer " da string do token antes de ser analisado
+   // O token geralmente é enviado no formato "Bearer <token>", e essa função remove o "Bearer " 
+   // para deixar apenas o token em si.
+private static String refactorToken(String token) {
+    // Verifica se o token contém o prefixo "Bearer "
+    if (token.contains(JWT_BEARER)) {
+        // Se o prefixo estiver presente, ele é removido utilizando o método substring,
+        // que extrai a parte do token logo após o comprimento da string "Bearer ".
+        return token.substring(JWT_BEARER.length());
     }
+    // Se o token não contiver o prefixo "Bearer ", ele é retornado inalterado.
+    return token;
+}
+
 }
